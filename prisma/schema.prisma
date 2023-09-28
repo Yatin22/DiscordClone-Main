@@ -3,38 +3,66 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
-  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
+
 model Profile {
-  id String @id @default(uuid())
-  userId String @unique
-  name String
-  imageUrl String @db.Text //special type to make it more long String
-  email String @db.Text
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-  servers Server[]
-  members Member[]
-  channels Channel[]
+  id        String    @id @default(uuid())
+  userId    String    @unique
+  name      String
+  imageUrl  String
+  email     String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  channels  Channel[]
+  members   Member[]
+  servers   Server[]
 }
+
 model Server {
-  id String @id @default(uuid())
-  name String
-  imageUrl String @db.Text
-  inviteUrl String @db.Text
-  
-  profileId String
-  profile Profile @relation(fields: [profileId],references: [id] , onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  members Member[]
-  channels Channel[]
+  id         String    @id @default(uuid())
+  name       String
+  imageUrl   String
+  inviteCode String
+  profileId  String
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  channels   Channel[]
+  members    Member[]
+  profile    Profile   @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
   @@index([profileId])
+}
 
+model Member {
+  id        String     @id @default(uuid())
+  role      MemberRole @default(GUEST)
+  profileId String
+  serverId  String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  profile   Profile    @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  server    Server     @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([serverId])
+}
+
+model Channel {
+  id        String      @id @default(uuid())
+  name      String
+  type      ChannelType @default(TEXT)
+  profileId String
+  serverId  String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  profile   Profile     @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  server    Server      @relation(fields: [serverId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
+  @@index([serverId])
 }
 
 enum MemberRole {
@@ -43,37 +71,8 @@ enum MemberRole {
   GUEST
 }
 
-model Member {
-  id String @id @default(uuid())
-  role MemberRole @default(GUEST)
-  
-  profileId String
-  profile Profile @relation(fields: [profileId] , references: [id], onDelete: Cascade)
-  serverId String
-  server Server @relation(fields: [serverId] , references: [id], onDelete: Cascade)
-   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  @@index([profileId])
-  @@index([serverId])
-}
-
 enum ChannelType {
-  TEXT 
+  TEXT
   AUDIO
   VOICE
-}
-
-model Channel {
-  id String @id @default(uuid())
-  name String
-  type  ChannelType @default(TEXT)
-  profileId String
-  profile Profile @relation(fields: [profileId] , references: [id], onDelete: Cascade)
-  serverId String
-  server Server @relation(fields: [serverId] , references: [id], onDelete: Cascade)
-  @@index([profileId])
-  @@index([serverId])
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
