@@ -17,7 +17,7 @@ const ServerIdPage = async({params}:ServerIdPageProps) => {
     }
     const server=await db.server.findUnique({
         where:{
-            id:params?.serverid,
+            id:params.serverid,
             members:{
                 some:{
                     profileId:profile.id,
