@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 interface ServerIdPageProps{
     params:{
-        serverid:string;
+        serverId:string;
     }
     
 }
@@ -17,7 +17,7 @@ const ServerIdPage = async({params}:ServerIdPageProps) => {
     }
     const server=await db.server.findUnique({
         where:{
-            id:params.serverid,
+            id:params.serverId,
             members:{
                 some:{
                     profileId:profile.id,
