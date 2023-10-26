@@ -8,7 +8,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Check, Copy, RefreshCw } from "lucide-react";
 import { useOrigin } from "@/hooks/use-origin";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useToast } from "@/components/ui/use-toast"
 import axios from "axios";
 
@@ -63,13 +63,13 @@ export const InviteModal = () => {
                             
                         </Label>
                         <div className="flex items-center mt-2 gap-x-2">
-                            <Input className="bg-zinc-300/50 border-0 focus:visible:ring-0 text-black focus-visible:ring-offset-0" value={inviteUrl} disabled={loading}/>
+                            <Input className="bg-zinc-300/50 border-0 focus:visible:ring-0 text-black focus-visible:ring-offset-0"  value={inviteUrl} disabled={loading} readOnly/>
                             <Button size="icon" onClick={onCopy} disabled={loading}>
                                 {copied?<Check/>:
                                 <Copy className="w-4 h-4"/>}
                                 </Button>
                         </div>
-                        <Button size="icon" variant="link" size="sm" className="text-xs text-zinc-500 mt-4" disabled={loading} onClick={onNew}>
+                        <Button variant="link" size="sm" className="text-xs text-zinc-500 mt-4" disabled={loading} onClick={onNew}>
                             Generate a new link
                                 <RefreshCw className="w-4 h-4 ml-2"/>
                             </Button>

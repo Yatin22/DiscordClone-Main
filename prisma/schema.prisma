@@ -74,5 +74,5 @@ enum MemberRole {
 enum ChannelType {
   TEXT
   AUDIO
-  VOICE
+  VIDEO
 }

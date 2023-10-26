@@ -15,7 +15,7 @@ const NavigationItem = ({
     name
 }: NavigationItemProps) => {
     const onClick=()=>{
-        router.push(`/servers/${id}`)
+        router.replace(`/servers/${id}`)
     }
     const params = useParams();
     const router = useRouter();

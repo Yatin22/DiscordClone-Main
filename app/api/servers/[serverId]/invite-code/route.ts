@@ -1,12 +1,12 @@
 import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import {v4 as uuidv4} from 'uuid'
 
 type RequestData = {
     inviteCode: string
   }
-export async function PATCH(req:RequestData,{params}:{params:{serverId:string}}){
+export async function PATCH(req: Request | NextRequest,{params}:{params:{serverId:string}}){
     try {
         
         const profile=await currentProfile();

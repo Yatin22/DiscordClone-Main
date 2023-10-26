@@ -2,7 +2,7 @@
 CREATE TYPE "MemberRole" AS ENUM ('ADMIN', 'MODERATOR', 'GUEST');
 
 -- CreateEnum
-CREATE TYPE "ChannelType" AS ENUM ('TEXT', 'AUDIO', 'VOICE');
+CREATE TYPE "ChannelType" AS ENUM ('TEXT', 'AUDIO', 'VIDEO');
 
 -- CreateTable
 CREATE TABLE "Profile" (
