@@ -23,6 +23,7 @@ const ServerIdLayout = async ({ children,params}: { children: React.ReactNode,pa
         return  redirect("/");
     }
     
+    
     return (
         <div className="h-full">
             <div className="hidden md:flex h-full w-60 z-20 flex-col fixed inset-y-0">
