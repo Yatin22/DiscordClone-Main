@@ -12,8 +12,8 @@ model Profile {
   id        String    @id @default(uuid())
   userId    String    @unique
   name      String
-  imageUrl  String
-  email     String
+  imageUrl  String    @db.Text
+  email     String    @db.Text
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   channels  Channel[]
@@ -24,7 +24,7 @@ model Profile {
 model Server {
   id         String    @id @default(uuid())
   name       String
-  imageUrl   String
+  imageUrl   String  @db.Text
   inviteCode String @unique
   profileId  String
   createdAt  DateTime  @default(now())
